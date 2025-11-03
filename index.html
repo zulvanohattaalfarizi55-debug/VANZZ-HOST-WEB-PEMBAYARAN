@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ALL PEMBAYARAN VANZZ HOST</title>
+  <style>
+    :root{
+      --bg-dark:#1b0030; /* dark purple */
+      --accent-red:#8B0000; /* darah */
+      --neon-red:#ff004f; /* neon merah */
+      --muted:#d3cbe6;
+      --card: rgba(255,255,255,0.03);
+      --glass: rgba(255,255,255,0.04);
+      --btn-glow: 0 6px 20px rgba(255,0,80,0.18);
+    }
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(130,0,160,0.18), transparent 8%),
+                  radial-gradient(1000px 600px at 90% 90%, rgba(60,0,100,0.16), transparent 8%),
+                  var(--bg-dark);
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow:hidden;
+    }
+
+    /* blinking overlay (kedip) */
+    .blink-overlay{
+      position:fixed; inset:0; pointer-events:none;
+      background:
+        linear-gradient(180deg, rgba(255,0,80,0.02), rgba(0,0,0,0.02));
+      mix-blend-mode:screen;
+      animation: blink 4s infinite;
+      opacity:0.9;
+      z-index:2;
+    }
+    @keyframes blink{
+      0%{opacity:0.9}
+      42%{opacity:0.95}
+      45%{opacity:0.6}
+      46%{opacity:0.95}
+      60%{opacity:0.85}
+      100%{opacity:0.92}
+    }
+
+    /* container */
+    .wrap{
+      position:relative;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px;
+      z-index:3;
+    }
+    .card{
+      width:100%;
+      max-width:920px;
+      text-align:center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+      border-radius:16px;
+      padding:34px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+      position:relative;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Title blood-red */
+    h1.title{
+      margin:0 0 22px 0;
+      font-size:28px;
+      letter-spacing:1px;
+      color: var(--accent-red);
+      text-shadow:
+        0 2px 0 rgba(0,0,0,0.6),
+        0 6px 14px rgba(139,0,0,0.25),
+        0 0 18px rgba(139,0,0,0.25);
+      font-weight:800;
+    }
+
+    /* Buttons */
+    .buttons{
+      display:flex;
+      gap:14px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .btn{
+      appearance:none;
+      border:0;
+      outline:0;
+      padding:14px 20px;
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      color:#fff;
+      cursor:pointer;
+      font-weight:700;
+      letter-spacing:0.6px;
+      box-shadow: var(--btn-glow);
+      transition: transform .14s ease, box-shadow .14s ease;
+      border: 1px solid rgba(255,255,255,0.04);
+      min-width:180px;
+    }
+    .btn:hover{ transform: translateY(-4px); box-shadow:0 18px 40px rgba(0,0,0,0.6); }
+
+    .btn.dana{ background: linear-gradient(180deg, rgba(255,20,60,0.14), rgba(255,20,60,0.06)); }
+    .btn.gopay{ background: linear-gradient(180deg, rgba(255,60,60,0.12), rgba(255,60,60,0.05)); }
+    .btn.qris{ background: linear-gradient(180deg, rgba(255,30,100,0.10), rgba(255,30,100,0.04)); }
+
+    .note{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* skull animation elements (floating) */
+    .skull{
+      position:fixed;
+      top:110%;
+      font-size:22px;
+      opacity:0.12;
+      transform: translateY(0) rotate(0deg);
+      user-select:none;
+      pointer-events:none;
+      z-index:1;
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,0.8));
+      will-change: transform, opacity;
+      animation-iteration-count:infinite;
+      animation-timing-function: linear;
+    }
+
+    /* small decorative footer */
+    footer{
+      margin-top:22px;
+      font-size:13px;
+      color:#f8d8e0;
+      opacity:0.95;
+    }
+
+    /* Subpage styles (when viewing a payment page) */
+    .subpage{
+      text-align:left;
+      padding:18px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.03), rgba(255,255,255,0.01));
+      border-radius:12px;
+      margin-top:18px;
+    }
+    .subpage h2{
+      margin:0 0 10px 0;
+      font-size:22px;
+      color:var(--neon-red);
+      text-shadow: 0 4px 18px rgba(255,0,79,0.14);
+      font-weight:800;
+    }
+    .info-row{ color:#fff; margin-bottom:8px; font-weight:600; }
+    .small{ font-size:13px; color: #f7cfd9; font-weight:500; }
+
+    .danger{
+      margin-top:10px;
+      font-weight:800;
+      color:#fff;
+      background: linear-gradient(90deg, rgba(255,0,70,0.12), rgba(255,0,70,0.06));
+      padding:10px;
+      border-radius:10px;
+      border:1px solid rgba(255,0,70,0.12);
+      display:inline-block;
+    }
+
+    .back{
+      margin-top:16px;
+      display:inline-block;
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      color:#fff;
+      padding:10px 12px;
+      border-radius:10px;
+      cursor:pointer;
+    }
+
+    /* bottom fixed footer */
+    .fixed-footer{
+      position:fixed;
+      left:0; right:0;
+      bottom:8px;
+      display:flex;
+      justify-content:center;
+      z-index:4;
+      pointer-events:none;
+    }
+    .fixed-footer .text{
+      background: rgba(0,0,0,0.35);
+      padding:8px 14px;
+      border-radius:999px;
+      color:#fff;
+      font-weight:800;
+      border:1px solid rgba(255,255,255,0.04);
+      pointer-events:auto;
+    }
+
+    /* responsive */
+    @media (max-width:520px){
+      .card{ padding:20px; border-radius:12px; }
+      h1.title{ font-size:20px; }
+      .btn{ min-width:140px; padding:12px 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="blink-overlay" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="card" role="main" id="mainCard" aria-live="polite">
+      <h1 class="title">ALL PEMBAYARAN VANZZ HOST</h1>
+
+      <div id="contentArea">
+        <!-- Main page content will be inserted by JS based on URL -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- footer fixed -->
+  <div class="fixed-footer" aria-hidden="false">
+    <div class="text">❌❗ ALL TRX NO REFF ❗❌</div>
+  </div>
+
+  <script>
+    /***********************
+      PAGE RENDERING LOGIC
+      - Single HTML that supports main page and subpages via ?page=...
+    ***********************/
+    const params = new URLSearchParams(location.search);
+    const page = params.get('page'); // possible values: dana, gopay, qris
+    const contentArea = document.getElementById('contentArea');
+
+    function makeMain(){
+      contentArea.innerHTML = `
+        <p class="note">Selamat datang — pilih metode pembayaran di bawah. <strong style="color:var(--neon-red)">❗WAJIB SERTAKAN BUKTI TF ❗</strong></p>
+        <div class="buttons" role="navigation" aria-label="Metode Pembayaran">
+          <button class="btn dana" id="btnDana">PEMBAYARAN DANA</button>
+          <button class="btn gopay" id="btnGopay">PEMBAYARAN GOPAY</button>
+          <button class="btn qris" id="btnQris">QRIS VANZZ</button>
+        </div>
+
+        <div style="display:flex;justify-content:center;gap:12px;margin-top:12px;flex-wrap:wrap">
+          <button class="btn" id="btnDev" style="min-width:160px;background:linear-gradient(90deg, rgba(0,200,255,0.06), rgba(255,0,140,0.04))">DEVELOPER</button>
+        </div>
+
+        <p class="note" style="margin-top:18px">🔒 Halaman menggunakan background dark purple, efek kedip, dan efek tengkorak melayang.</p>
+      `;
+
+      // add event listeners
+      document.getElementById('btnDana').addEventListener('click', ()=> openPayment('dana'));
+      document.getElementById('btnGopay').addEventListener('click', ()=> openPayment('gopay'));
+      document.getElementById('btnQris').addEventListener('click', ()=> openPayment('qris'));
+      document.getElementById('btnDev').addEventListener('click', ()=> {
+        // open telegram link
+        window.open('https://t.me/VanzzHost', '_blank', 'noopener');
+      });
+    }
+
+    function openPayment(which){
+      // open new tab with same file but page param
+      const url = location.pathname + '?page=' + which;
+      window.open(url, '_blank', 'noopener');
+    }
+
+    function makeSubpage(which){
+      let heading='', phone='', owner='';
+      if(which === 'dana'){
+        heading = 'PEMBAYARAN DANA';
+        phone = 'NOPE 081367236360';
+        owner = 'SUCI*****';
+      } else if(which === 'gopay'){
+        heading = 'PEMBAYARAN GOPAY';
+        phone = 'NOPE 085126747481';
+        owner = 'VANZZ HOST';
+      } else if(which === 'qris'){
+        heading = 'PEMBAYARAN QRIS';
+        phone = 'MINTAK SAMA VANZZ HOST SESUAI NOMINAL YANG DI TENTUKAN';
+        owner = 'VANZZ HOST';
+      } else {
+        // fallback to main
+        makeMain(); return;
+      }
+
+      contentArea.innerHTML = `
+        <div class="subpage" role="region" aria-label="${heading}">
+          <h2>${heading}</h2>
+          <div class="info-row">Atas Nama: <span style="color:var(--neon-red); font-weight:900">${owner}</span></div>
+          <div class="info-row">Informasi: <span style="color:#ffd9e0">${phone}</span></div>
+          <div class="small">❗WAJIB SERTAKAN BUKTI TF ❗</div>
+
+          <div style="margin-top:12px;">
+            <button class="back" id="backBtn">⬅️ KEMBALI</button>
+            <button class="back" id="copyBtn" style="margin-left:8px">SALIN INFO</button>
+          </div>
+          <div style="margin-top:12px;color:var(--muted);font-size:13px">
+            Halaman ini dibuka sebagai tab baru — layout sama seperti halaman utama (background dark purple, efek kedip, tengkorak melayang).
+          </div>
+        </div>
+      `;
+
+      document.getElementById('backBtn').addEventListener('click', () => {
+        // go to main in same tab:
+        location.href = location.pathname;
+      });
+
+      // copy info to clipboard
+      document.getElementById('copyBtn').addEventListener('click', async () => {
+        try{
+          await navigator.clipboard.writeText(`${heading}\nAtas Nama: ${owner}\nInfo: ${phone}\n❗WAJIB SERTAKAN BUKTI TF ❗`);
+          alert('Info pembayaran disalin ke clipboard ✅');
+        }catch(e){
+          alert('Tidak dapat menyalin secara otomatis, silakan salin manual.');
+        }
+      });
+    }
+
+    // initial render
+    if(page){
+      makeSubpage(page);
+    } else {
+      makeMain();
+    }
+
+    /***********************
+      FLOATING SKULLS EFFECT
+      - Generate many skull elements with random positions, sizes, durations
+    ***********************/
+    const skullCount = 28; // banyaknya tengkorak
+    const skullsContainer = document.createDocumentFragment();
+
+    for(let i=0;i<skullCount;i++){
+      const s = document.createElement('div');
+      s.className = 'skull';
+      // use Unicode skull symbol for simplicity (keamanan & licensing)
+      s.textContent = '☠️';
+      // random size
+      const sz = Math.random() * 28 + 12; // 12 - 40 px
+      s.style.fontSize = sz + 'px';
+      // random left position
+      const left = Math.random() * 100;
+      s.style.left = left + 'vw';
+      // random animation duration & delay
+      const dur = Math.random() * 18 + 10; // 10 - 28s
+      const delay = - (Math.random() * dur);
+      // create keyframes per element using inline animation
+      const translateY = Math.random() * 120 + 220; // how far up
+      const rotate = (Math.random()*90 - 45);
+      const drift = (Math.random()*120 - 60);
+      s.style.animationName = `floatUp${i}`;
+      s.style.animationDuration = dur + 's';
+      s.style.animationDelay = delay + 's';
+      s.style.opacity = (Math.random()*0.5 + 0.08).toFixed(2);
+      s.style.transform = `translateY(0) rotate(${Math.random()*40-20}deg)`;
+      // Create keyframes dynamically
+      const styleSheet = document.styleSheets[0];
+      const keyframes =
+        `@keyframes floatUp${i} {
+          0% { transform: translateY(0px) translateX(0px) rotate(0deg); opacity:${s.style.opacity}; }
+          50% { opacity:${Math.max(0.02, parseFloat(s.style.opacity)-0.02)}; }
+          100% { transform: translateY(-${translateY}px) translateX(${drift}px) rotate(${rotate}deg); opacity:0.02; }
+        }`;
+      try{
+        styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+      }catch(e){
+        // fallback: append to head style
+        const styleTag = document.createElement('style');
+        styleTag.innerHTML = keyframes;
+        document.head.appendChild(styleTag);
+      }
+      skullsContainer.appendChild(s);
+    }
+    document.body.appendChild(skullsContainer);
+
+    /***********************
+      Extra subtle shimmer for title / cards (small random blinks)
+    ***********************/
+    // small periodic pulse on entire card to simulate 'kedip' lebih hidup
+    (function subtlePulse(){
+      const card = document.querySelector('.card');
+      if(!card) return;
+      let t=0;
+      setInterval(()=>{
+        t++;
+        const scale = 1 + (Math.sin(t/8) * 0.003);
+        card.style.transform = `scale(${scale})`;
+      }, 120);
+    })();
+
+    /***********************
+      Accessibility: allow keyboard activation for main buttons when rendered
+    ***********************/
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape'){
+        // go back to main quickly if in subpage
+        if(page) location.href = location.pathname;
+      }
+    });
+
+    /***********************
+      Extra: Prevent accidental dragging selection of emojis
+    ***********************/
+    document.addEventListener('dragstart', e => e.preventDefault());
+  </script>
+</body>
+</html>
